@@ -1,0 +1,34 @@
+{
+  "name": "sistema-acceso-web",
+  "version": "1.0.0",
+  "description": "My magnificent Nuxt.js project",
+  "author": "qqqqq",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/moment": "^1.6.1",
+    "axios": "^0.20.0",
+    "nuxt": "^2.0.0",
+    "nuxt-buefy": "^0.3.2",
+    "nuxt-i18n": "^6.15.4",
+    "nuxt-vuex-localstorage": "^1.2.7",
+    "vee-validate": "^3.3.9"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^2.0.0",
+    "@nuxtjs/eslint-module": "^1.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^6.1.0",
+    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1"
+  }
+}

@@ -1,0 +1,102 @@
+version: "3.7"
+services:
+  fastapi:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    container_name: fastapi
+    image: iglesia-api
+    restart: unless-stopped
+    environment:
+      APP_ENV: "prod"
+      APP_DEBUG: "False"
+      APP_PORT: 5000
+      MONGODB_DATABASE: iglesiaDB
+      MONGODB_USERNAME: master
+      MONGODB_PASSWORD: master1234
+      MONGODB_HOSTNAME: mongodb
+      SERVER_DOMAIN: http://35.184.61.162
+    ports:
+      - "5000:5000"
+    # volumes:
+    #   - ./app/:/app
+    depends_on:
+      - mongodb
+    networks:
+      - frontend
+      - backend
+
+  mongodb:
+    image: mongo:4.0.3
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root1234
+      MONGO_INITDB_DATABASE: iglesiaDB
+
+      MONGODB_DATA_DIR: /data/db
+      MONDODB_LOG_DIR: /dev/null
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - mongodbdata:/data/db
+
+    networks:
+      - backend
+      
+  nuxt:
+    build:
+      args:
+        BASE_URL: https://iglesiapeniel.website/api
+      context: website
+      dockerfile: Dockerfile
+    image: website-nuxt
+    container_name: website-app
+    restart: unless-stopped
+    ports:
+      - "3333:3000"
+    command: "npm run start"
+    networks:
+      - frontend
+
+  webserver:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    image: webserver
+    container_name: webserver
+    restart: unless-stopped
+    environment:
+      APP_ENV: "prod"
+      APP_NAME: "webserver"
+      APP_DEBUG: "false"
+      SERVICE_NAME: "webserver"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # - ./app/files:/var/www/nginx
+      - nginxdata:/var/log/nginx
+    depends_on:
+      - fastapi
+      - nuxt
+    networks:
+      - frontend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+volumes:
+  files:
+    driver: local
+  mongodbdata:
+    driver: local
+  appdata:
+    driver: local
+  nginxdata:
+    driver: local
