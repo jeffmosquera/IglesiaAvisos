@@ -15,7 +15,7 @@ services:
       MONGODB_USERNAME: master
       MONGODB_PASSWORD: master1234
       MONGODB_HOSTNAME: mongodb
-      SERVER_DOMAIN: http://35.184.61.162
+      SERVER_DOMAIN: http://34.66.75.224
     ports:
       - "5000:5000"
     # volumes:

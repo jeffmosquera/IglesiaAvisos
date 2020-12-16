@@ -9,7 +9,7 @@ class MongoDB:
 
         username = "master"
         password = "master1234"
-        server = "35.184.61.162"
+        server = "34.66.75.224"
         self.client = MongoClient(
             'mongodb://%s:%s@%s:27017/iglesiaDB' % (username, password, server))
         self.db = self.client['iglesiaDB']

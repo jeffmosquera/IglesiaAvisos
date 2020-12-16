@@ -10,7 +10,7 @@ def conseguir_eventos(response: Response):
     """
     Conseguir todos los eventos registrados
     """
-    eventos = EventoModel.conseguir_todo()
+    eventos = EventoModel.conseguir_todo_ordenado_por_datetimeDate()
     return {"eventos": eventos}
 
 
